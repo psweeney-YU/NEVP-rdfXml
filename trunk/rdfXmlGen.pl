@@ -39,7 +39,7 @@ use IPC::System::Simple qw(system capture);
 
 our %in;
 &ReadParse(%in);
-my $version = '$Rev: 9 $';
+my $version = '$Rev$';
 $version =~ s{(\$Rev:) ([0-9]*) (\$)}{$2};
 my %config = do './rdfXmlGenConfig.pl';
 my $date = localtime->ymd;
