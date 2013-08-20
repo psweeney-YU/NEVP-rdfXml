@@ -28,6 +28,7 @@
 #----------
 
 use strict;
+use utf8;
 use DBI;
 use DBD::mysql;
 use CGI qw(:cgi-lib :standard);
@@ -39,6 +40,8 @@ use Date::Manip;
 use IO::Tee;
 use Digest::MD5 qw(md5_hex);
 use IPC::System::Simple qw(system capture);
+
+binmode STDOUT, ":encoding(UTF-8)";
 
 our %in;
 &ReadParse(%in);
@@ -52,26 +55,30 @@ my $d = localtime->ymd;
 my $t = localtime->hms("");
 my $date = $d."-".$t;
 
+#-----make iPlant export directory for batch of exported images and RDF/XML files
+mkdir "$config{exportiPlant}$date", 0755 unless -d "$config{exportiPlant}$date";
+
 #-----open logflie
-open (OUTFILELOG, ">>$config{logFile}_$date.txt") || die "ERROR: opening $config{logFile}_$date.txt\n";
+open (OUTFILELOG, ">$config{logPath}$date/rdfXmlLog_$date.txt") || die "ERROR: opening $config{logPath}$date/rdfXmlLog_$date.txt\n";
 
 #-----redirect error to log file
-open (STDERR, ">>", "$config{logFile}_$date.txt");
+open (STDERR, ">>", "$config{logPath}$date/rdfXmlLog_$date.txt");
 
 print STDERR "******Begin log for $date******\n";
 
-#-----make export directory for batch of exported images and RDF/XML files
-mkdir "$config{exportPath}$date", 0755 unless -d "$config{exportPath}$date";
-
 #-----open data outfiles
-open (OUTFILESPEC, ">$config{exportPath}$date/rdfSpecimen_$date.xml") || die "ERROR: opening $config{exportPath}$date/rdfSpecimen_$date.xml\n";
-open (OUTFILEIMG, ">$config{exportPath}$date/rdfImage_$date.xml") || die "ERROR: opening $config{exportPath}$date/rdfImage_$date.xml\n";
+open (OUTFILESPEC, ">:encoding(utf8)","$config{exportiPlant}$date/rdfSpecimen_$date.xml") || die "ERROR: opening $config{exportiPlant}$date/rdfSpecimen_$date.xml\n";
+open (OUTFILEIMG, ">:encoding(utf8)","$config{exportiPlant}$date/rdfImage_$date.xml") || die "ERROR: opening $config{exportiPlant}$date/rdfImage_$date.xml\n";
+open (OUTFILESPECSYM, ">:encoding(utf8)","$config{exportSymbiota}/rdfSpecimen_$date.xml") || die "ERROR: opening $config{exportSymbiota}/rdfSpecimen_$date.xml\n";
+open (OUTFILEIMGSYM, ">:encoding(utf8)","$config{exportSymbiota}/rdfImage_$date.xml") || die "ERROR: opening $config{exportSymbiota}/rdfImage_$date.xml\n";
 
 
-my $bothFiles = IO::Tee->new( \*OUTFILESPEC, \*OUTFILEIMG );
+my $allFiles = IO::Tee->new( \*OUTFILESPEC, \*OUTFILEIMG, \*OUTFILESPECSYM, \*OUTFILEIMGSYM);
+my $specimenDataFiles = IO::Tee->new( \*OUTFILESPEC, \*OUTFILESPECSYM);
+my $imageDataFiles = IO::Tee->new( \*OUTFILEIMG, \*OUTFILEIMGSYM);
 
 #-----connect to MYSQL database
-my $dbh = DBI->connect("DBI:mysql:".$config{db}.";host=".$config{host}."",$config{user},$config{pass}) or die "Connection Error: $DBI::errstr\n";
+my $dbh = DBI->connect("DBI:mysql:".$config{db}.";host=".$config{host}."",$config{user},$config{pass},{mysql_enable_utf8 => 1}) or die "Connection Error: $DBI::errstr\n";
 
 #-----MYSQL query to popluate specimen.scientificName field, when not populated
 my $updateSciNamesql = qq{
@@ -118,6 +125,7 @@ my $sql = "
 		e.InstituteName,		#name of institution, dwc:institutionCode
 		f.rights,		#dcterms:rights, used in image RDF/XML document
 		f.usage		#xmpRights:UsageTerms, used in image RDF/XML document
+		#f.webStatement			#xmpRights:WebStatement, used in image RDF/XML document
 	FROM
 		specimen a,
 		image_raw b,
@@ -144,12 +152,12 @@ my $resultCount = $sth->rows;
 
 #-----create the RDF/XML documents
 #-----headers
-print {$bothFiles} <<HEADER;
+print {$allFiles} <<HEADER;
 <?xml version=\"1.0\" encoding=\"utf-8\"?>
 HEADER
 
 #----header of specimen data file
-print OUTFILESPEC <<HEADERSPEC;
+print {$specimenDataFiles} <<HEADERSPEC;
 <rdf:RDF
 	xmlns:dwcFP="http://filteredpush.org/ontologies/oa/dwcFP.owl#" 
 	xmlns:foaf="http://xmlns.com/foaf/0.1/"
@@ -162,6 +170,8 @@ print OUTFILESPEC <<HEADERSPEC;
 	xmlns:obo="http://purl.obolibrary.org/obo/"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:vivo="http://vivoweb.org/ontology/core#"
+	xmlns:ac="http://rs.tdwg.org/ac/terms/"
 	>
 	<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }/">
         <rdfs:comment xml:lang="en">Document of new NEVP specimen records expressed as OA annotations.</rdfs:comment>
@@ -170,7 +180,7 @@ print OUTFILESPEC <<HEADERSPEC;
 HEADERSPEC
 
 #----header of image data file
-print OUTFILEIMG <<HEADERIMG;
+print {$imageDataFiles} <<HEADERIMG;
 <rdf:RDF
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -199,14 +209,18 @@ my $barcodeFile = $barcode;
 $barcodeFile =~ s/\.//g;
 my $copyStatus;
 my $finalPath;
+my $folderName = getFolderName($collectionCode);
+my $outputFileMD5;
 
-#----------If HUH add collectionCode prefix.
-if ($institution eq "HUH") {
-	$copyStatus = copy("$imagePath$imageName","$config{exportPath}$date/$collectionCode$barcodeFile.$suffix");
-	$finalPath = "/$collectionCode/$date/$collectionCode$barcodeFile.$suffix";
+#----------If HUH add collectionCode prefix to filename
+if ( ( index ($institution, "HUH" ) != -1 ) || ( index ($institution, "Harvard" )  != -1 ) ) {
+	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
+	$finalPath = "/home/nevp/bisque_data/NEVP/$folderName/$date/$collectionCode$barcodeFile.$suffix";
+	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
 } else {
-	$copyStatus = copy("$imagePath$imageName","$config{exportPath}$date/$barcodeFile.$suffix");
-	$finalPath = "/$collectionCode/$date/$barcodeFile.$suffix";
+	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
+	$finalPath = "/home/nevp/bisque_data/NEVP/$folderName/$date/$barcodeFile.$suffix";
+	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
 }
 
 #-----get md5 checksum of file
@@ -217,7 +231,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 	
 		if ($copyStatus) {
 		
-			print OUTFILELOG "target: $imagePath$imageName, file copied, ";	
+			print OUTFILELOG "target: $imagePath$imageName, image file copied, ";	
 		
 			my $time = Time::Piece->strptime(localtime->datetime, "%Y-%m-%dT%H:%M:%S");
 			$time -= $time->localtime->tzoffset;
@@ -249,8 +263,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 	
 			#-----get collector's full name & GUID
 			my ($collectorName,$collectorGUID) = getCollector($specimenID);
-	
-			print OUTFILESPEC <<DATASPECIMEN;
+			print {$specimenDataFiles} <<DATASPECIMEN;
 				<oa:Annotation rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
 					<oa:hasTarget>
 						<oa:SpecificResource rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
@@ -260,7 +273,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 									<dwc:institutionCode>$institution</dwc:institutionCode>
 								</oad:KVPairQuerySelector>
 							</oa:hasSelector>
-							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchResource" />
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
 						</oa:SpecificResource>
 					 </oa:hasTarget>
 					 <oa:hasBody>
@@ -269,6 +282,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
 							<dwc:catalogNumber>$barcode</dwc:catalogNumber>
 							<dwcFP:hasCollectionByID rdf:resource="$BCIcollectionID"/>
+							<dwc:institutionCode>$institution</dwc:institutionCode>
 							<dwc:collectionCode>$collectionCode</dwc:collectionCode>
 							<dwcFP:hasIdentification>
 								<dwcFP:Identification rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
@@ -308,13 +322,22 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 						</dwcFP:Occurence>
 					</oa:hasBody>
 					<oad:hasEvidence rdf:resource="$mediaURI" />
+					<ac:hasAccessPoint>
+						<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
+							<ac:variant>Offline</ac:variant>
+							<ac:accessURI>file:/$finalPath</ac:accessURI>
+							<dc:format>$suffix</dc:format>
+							<ac:hashFunction>MD5</ac:hashFunction>						
+							<ac:hashValue>$fileMD5</ac:hashValue>
+						</rdf:Description>
+					</ac:hasAccessPoint>					
 					<oad:hasExpectation>
 						<oad:Expectation_Insert rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }" />
 					</oad:hasExpectation>
 					<oa:motivatedBy>
 						<oad:transcribing />
 					</oa:motivatedBy>  
-					<oa:motivatedBy rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
 					<oa:annotatedBy>
 						<foaf:Person rdf:about="urn:uuid:$userUUID">
 							<foaf:mbox_sha1sum>$useremailMD5</foaf:mbox_sha1sum>
@@ -333,50 +356,95 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 DATASPECIMEN
 
 			#-----image RDF/XML file
-			print OUTFILEIMG <<DATAIMAGE;
+			print {$imageDataFiles} <<DATAIMAGE;
 				<rdf:Description rdf:about="$mediaURI">
-					<rdfs:comment xml:lang="en">Metadata associated with NEVP image</rdfs:comment>
-					<rdfs:comment xml:lang="en">Serialized by: NEVP rdfXMLGen.pl version $version</rdfs:comment>
-					<dc:identifier>$mediaUUID</dc:identifier>
-					<dwc:scientificName>$scientificName</dwc:scientificName>
-					<dc:type>StillImage</dc:type>
-					<dc:format>$suffix</dc:format>
-					<dc:creator>$username</dc:creator>
-					<dc:created>$createDateGMT</dc:created>
-					<dc:modified>$modificationDateGMT</dc:modified>
+					<ac:metadataLanguageLiteral>en</ac:metadataLanguageLiteral>
+					<ac:metadataLanguage rdf:resource="http://id.loc.gov/vocabulary/iso639-1/en"/>
 					<xmp:MetadataDate>$timeGMT</xmp:MetadataDate>
-					<dc:rights>$rights</dc:rights>
-					<xmpRights:Owner>$institution</xmpRights:Owner>
-					<xmpRights:UsageTerms>$usage</xmpRights:UsageTerms>
+					<ac:digitizationDate>$createDateGMT</ac:digitizationDate>
 					<ac:associatedSpecimenReference rdf:resource="http://nevp.org/$collectionCode:$barcode"/>
-					<ac:variant>Offline</ac:variant>
-					<ac:accessURI>file:/$finalPath</ac:accessURI>
-					<dwcFP:md5checksum>$fileMD5</dwcFP:md5checksum>
+					<dc:rights>$rights</dc:rights>
+					<rdfs:comment xml:lang="en">Serialized by: NEVP rdfXMLGen.pl version $version</rdfs:comment>
+					<dwc:scientificName>$scientificName</dwc:scientificName>
+					<rdfs:comment xml:lang="en">Metadata associated with NEVP image</rdfs:comment>
+					<dc:type>StillImage</dc:type>
+					<dc:modified>$modificationDateGMT</dc:modified>
+					<dc:identifier>$mediaUUID</dc:identifier>
+					<xmpRights:Owner>$institution</xmpRights:Owner>
+					<dc:creator>$username</dc:creator>
+					<xmpRights:UsageTerms>$usage</xmpRights:UsageTerms>
+					<ac:hasAccessPoint>
+						<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
+							<ac:variant>Offline</ac:variant>
+							<ac:accessURI>file:/$finalPath</ac:accessURI>
+							<dc:format>$suffix</dc:format>
+							<ac:hashFunction>MD5</ac:hashFunction>						
+							<ac:hashValue>$fileMD5</ac:hashValue>
+						</rdf:Description>
+					</ac:hasAccessPoint>
 				</rdf:Description>
 DATAIMAGE
 
-			print OUTFILELOG "data written to files.\n";
-
+			print OUTFILELOG "data written to files, ";
+			
 			#-----set specimen.ExportDate 
 			updateExportDate($specimenID);
+			
 			#-----delete original file in workspace directory
-			#UNCOMMENT LINE BELOW AFTER TESTING
-			#unlink "$imagePath$imageName" or warn "Could not delete $imagePath$imageName";
+			if ( $fileMD5 eq $outputFileMD5 ) {
+					#UNCOMMENT LINE BELOW AFTER TESTING
+					#unlink "$imagePath$imageName" or warn "Could not delete $imagePath$imageName";
+					print OUTFILELOG "original image file deleted.\n";
+				} else {
+					print OUTFILELOG "original image file not deleted - checksums differ.\n";
+				}
 			} else {
-			print OUTFILELOG "$imagePath$imageName not found.\n";
+				print OUTFILELOG "$imagePath$imageName not found.\n";
 			}
 		}
 	}
 }
  
 #-----closing tags
-print {$bothFiles} "</rdf:RDF>\n";
+print {$allFiles} "</rdf:RDF>\n";
 
 #-----close outfiles
 close (OUTFILESPEC);
 close (OUTFILEIMG);
+close (OUTFILESPECSYM);
+close (OUTFILEIMGSYM);
+close (OUTFILELOG);
 
 #-----SUBFUNCTIONS
+
+#-----get iPlant digitizing institution folder name
+sub getFolderName
+{
+	my $collectionCode = $_[0];
+	
+	if ($collectionCode =~ /^(A|AMES|ECON|FH|GH|NEBC)$/) {
+		my $folder = "HUH";
+		return $folder;
+	} elsif ($collectionCode =~ /^(YU|CBS|BART|BERK|BSN|CCSU|CCNL|KESC|WCSU)$/) {
+		my $folder = "YU";
+		return $folder;
+	} elsif ($collectionCode =~ /^(VT)$/) {
+		my $folder = "VT";
+		return $folder;
+	} elsif ($collectionCode =~ /^(MASS|HF|WSCH)$/) {
+		my $folder = "MASS";
+		return $folder;
+	} elsif ($collectionCode =~ /^(BRU)$/) {
+		my $folder = "BRU";
+		return $folder;
+	} elsif ($collectionCode =~ /^(NHA)$/) {
+		my $folder = "NHA";
+		return $folder;
+	} else {
+		my $folder = "Other";
+		return $folder;
+	}
+}
 
 #-----get md5 hash of image file	
 sub md5sumFile
@@ -452,7 +520,6 @@ sub eventRemarks
 		my $eventRemarks = "";
 		return $eventRemarks;	
 	}
-	
 }
 
 #-----get taxonID
@@ -523,8 +590,8 @@ sub updateExportDate
 }
 
 #-----escape ampersands in outfiles - needed to ensure XML will validate.
-my $outspecfile = "$config{exportPath}$date/rdfSpecimen_$date.xml";
-my $outimgfile = "$config{exportPath}$date/rdfImage_$date.xml";
+my $outspecfile = "$config{exportiPlant}$date/rdfSpecimen_$date.xml";
+my $outimgfile = "$config{exportiPlant}$date/rdfImage_$date.xml";
 
 escapeAmpersands($outspecfile);
 escapeAmpersands($outimgfile);
