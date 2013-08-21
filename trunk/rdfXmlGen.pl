@@ -56,10 +56,10 @@ my $t = localtime->hms("");
 my $date = $d."-".$t;
 
 #-----make iPlant export directory for batch of exported images and RDF/XML files
-mkdir "$config{exportiPlant}$date", 0755 unless -d "$config{exportiPlant}$date";
+mkdir("$config{exportiPlant}$date",0777) unless(-d "$config{exportiPlant}$date" );
 
 #-----open logflie
-open (OUTFILELOG, ">$config{logPath}$date/rdfXmlLog_$date.txt") || die "ERROR: opening $config{logPath}$date/rdfXmlLog_$date.txt\n";
+open (OUTFILELOG, ">>$config{logPath}$date/rdfXmlLog_$date.txt") || die "ERROR: opening $config{logPath}$date/rdfXmlLog_$date.txt\n";
 
 #-----redirect error to log file
 open (STDERR, ">>", "$config{logPath}$date/rdfXmlLog_$date.txt");
