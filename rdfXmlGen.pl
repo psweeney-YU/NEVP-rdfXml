@@ -40,6 +40,9 @@ use Date::Manip;
 use IO::Tee;
 use Digest::MD5 qw(md5_hex);
 use IPC::System::Simple qw(system capture);
+use JSON qw(decode_json);
+use LWP::UserAgent;
+use HTTP::Request::Common qw(GET);
 
 binmode STDOUT, ":encoding(UTF-8)";
 
@@ -58,13 +61,17 @@ my $date = $d."-".$t;
 #-----make iPlant export directory for batch of exported images and RDF/XML files
 mkdir("$config{exportiPlant}$date",0777) unless(-d "$config{exportiPlant}$date" );
 
-#-----open logflie
+#-----open logfile
 open (OUTFILELOG, ">>$config{logPath}$date/rdfXmlLog_$date.txt") || die "ERROR: opening $config{logPath}$date/rdfXmlLog_$date.txt\n";
 
-#-----redirect error to log file
+#-----redirect STDERR and STDOUT to log file
 open (STDERR, ">>", "$config{logPath}$date/rdfXmlLog_$date.txt");
+open (STDOUT, ">>", "$config{logPath}$date/rdfXmlLog_$date.txt");
+select( OUTFILELOG );
+$| = 1; # turn on buffer autoflush for log output
+select(STDOUT);
 
-print STDERR "******Begin log for $date******\n";
+print STDERR "******Log for $date******\n";
 
 #-----open data outfiles
 open (OUTFILESPEC, ">:encoding(utf8)","$config{exportiPlant}$date/rdfSpecimen_$date.xml") || die "ERROR: opening $config{exportiPlant}$date/rdfSpecimen_$date.xml\n";
@@ -96,6 +103,7 @@ my $sql = "
 		a.SpecimenId,		#internal DB id for specimen record
 		a.Barcode,		#barcode attached to specimen, dwc:catalogNumber for NEVP
 		a.ScientificName,		#dwc:scientificName
+		a.Family,	#dwc:family
 		a.Genus,		#dwc:genus
 		a.SpecificEpithet,		#dwc:specificEpithet
 		a.InfraspecificRank,		#infraspecificRank
@@ -167,10 +175,10 @@ print {$specimenDataFiles} <<HEADERSPEC;
 	xmlns:oad="http://filteredpush.org/ontologies/oa/oad.rdf#"
 	xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:vivo="http://vivoweb.org/ontology/core#"
 	xmlns:obo="http://purl.obolibrary.org/obo/"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-	xmlns:vivo="http://vivoweb.org/ontology/core#"
 	xmlns:ac="http://rs.tdwg.org/ac/terms/"
 	>
 	<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }/">
@@ -196,10 +204,34 @@ HEADERIMG
 #-----loop through records
 {
 no warnings 'uninitialized';
-while (my ($specimenID,$barcode,$scientificName,$genus,$species,$rank,$infraSpecific,
+while (my ($specimenID,$barcode,$scientificName,$family,$genus,$species,$rank,$infraSpecific,
 $author,$qualifier,$collectorNumber,$verbatimDate,$beginDate,$endDate,$country,
 $county,$state,$town,$createDate,$modificationDate,$exportDate,$checksum,$imagePath,$imageName,$username,
 $useremail,$userURL,$userUUID,$collectionCode,$BCIcollectionID,$institution,$rights,$usage) = $sth->fetchrow_array) {
+
+#-----insert taxa into taxon table, if not already present
+my $newTaxonResult = getNewTaxonResult($scientificName);		
+if (getNewTaxonResult($scientificName) == 1) {
+	if ($family eq "") {
+		$family = getTNRSFamily($genus,$species);
+		};
+	if ($rank eq "subspecies") {
+		my $insertSciNamesql = qq{
+		INSERT INTO taxa_bonap (Family,Genus,SpecificEpithet,SubspecificEpithet,Authorship,BONAP_ID,UUID)
+		VALUES ("$family","$genus","$species","$infraSpecific","$author","$collectionCode","@{ [create_UUID_as_string(UUID_V4)] }");
+		};
+		my $sthInsertSciName = $dbh->prepare($insertSciNamesql);
+		$sthInsertSciName->execute;	
+	
+	} else {
+		my $insertSciNamesql = qq{
+		INSERT INTO taxa_bonap (Family,Genus,SpecificEpithet,InfraspecificRank,InfraspecificEpithet,Authorship,BONAP_ID,UUID)
+		VALUES ("$family","$genus","$species","$rank","$infraSpecific","$author","$collectionCode","@{ [create_UUID_as_string(UUID_V4)] }");
+		};
+		my $sthInsertSciName = $dbh->prepare($insertSciNamesql);
+		$sthInsertSciName->execute;
+	}
+}
 
 #-----copy image file to export folder
 
@@ -213,13 +245,14 @@ my $folderName = getFolderName($collectionCode);
 my $outputFileMD5;
 
 #----------If HUH add collectionCode prefix to filename
+#----------Set final path variable
 if ( ( index ($institution, "HUH" ) != -1 ) || ( index ($institution, "Harvard" )  != -1 ) ) {
 	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
-	$finalPath = "/home/nevp/bisque_data/NEVP/$folderName/$date/$collectionCode$barcodeFile.$suffix";
+	$finalPath = "/iplant/home/shared/NEVP/bisque_data/NEVP/$folderName/$date/$collectionCode$barcodeFile.$suffix";
 	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
 } else {
 	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
-	$finalPath = "/home/nevp/bisque_data/NEVP/$folderName/$date/$barcodeFile.$suffix";
+	$finalPath = "/iplant/home/shared/NEVP/bisque_data/NEVP/$folderName/$date/$barcodeFile.$suffix";
 	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
 }
 
@@ -240,14 +273,11 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 			#-----generate UUID for image
 			my $mediaUUID = create_UUID_as_string(UUID_V4);
 			my $mediaURI = "urn:uuid:$mediaUUID";
-
-			#-----specimen RDF/XML file
 		
 			#-----create ISO 8601 'compliant' event date
 			my $eventDate = createEventDate($beginDate,$endDate);
 			
 			#-----create eventRemarks
-			#my $eventRemarks = "";
 			my $eventRemarks = eventRemarks($beginDate,$endDate,$verbatimDate);
 			
 			#-----create ISO 8601 compliant creation and modification dates
@@ -263,6 +293,8 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 	
 			#-----get collector's full name & GUID
 			my ($collectorName,$collectorGUID) = getCollector($specimenID);
+			
+			#-----specimen RDF/XML content
 			print {$specimenDataFiles} <<DATASPECIMEN;
 				<oa:Annotation rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
 					<oa:hasTarget>
@@ -319,18 +351,18 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 							<dwc:modified>$modificationDateGMT</dwc:modified>
 							<obo:OBI_0000967>14.4</obo:OBI_0000967>
 							<dwcFP:hasAssociatedMedia rdf:resource="$mediaURI"/>
+							<ac:hasAccessPoint>
+								<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
+									<ac:variant>Offline</ac:variant>
+									<ac:accessURI>file:/$finalPath</ac:accessURI>
+									<dc:format>$suffix</dc:format>
+									<ac:hashFunction>MD5</ac:hashFunction>						
+									<ac:hashValue>$fileMD5</ac:hashValue>
+								</rdf:Description>
+							</ac:hasAccessPoint>	
 						</dwcFP:Occurence>
 					</oa:hasBody>
-					<oad:hasEvidence rdf:resource="$mediaURI" />
-					<ac:hasAccessPoint>
-						<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
-							<ac:variant>Offline</ac:variant>
-							<ac:accessURI>file:/$finalPath</ac:accessURI>
-							<dc:format>$suffix</dc:format>
-							<ac:hashFunction>MD5</ac:hashFunction>						
-							<ac:hashValue>$fileMD5</ac:hashValue>
-						</rdf:Description>
-					</ac:hasAccessPoint>					
+					<oad:hasEvidence rdf:resource="$mediaURI" />				
 					<oad:hasExpectation>
 						<oad:Expectation_Insert rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }" />
 					</oad:hasExpectation>
@@ -355,7 +387,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 				</oa:Annotation>
 DATASPECIMEN
 
-			#-----image RDF/XML file
+			#-----image RDF/XML content
 			print {$imageDataFiles} <<DATAIMAGE;
 				<rdf:Description rdf:about="$mediaURI">
 					<ac:metadataLanguageLiteral>en</ac:metadataLanguageLiteral>
@@ -374,7 +406,7 @@ DATASPECIMEN
 					<dc:creator>$username</dc:creator>
 					<xmpRights:UsageTerms>$usage</xmpRights:UsageTerms>
 					<ac:hasAccessPoint>
-						<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
+						<rdf:Description>
 							<ac:variant>Offline</ac:variant>
 							<ac:accessURI>file:/$finalPath</ac:accessURI>
 							<dc:format>$suffix</dc:format>
@@ -417,6 +449,52 @@ close (OUTFILELOG);
 
 #-----SUBFUNCTIONS
 
+#-----determine if taxon is in BONAP taxa table
+sub getNewTaxonResult
+{
+	my $scientificName = $_[0];
+	#-----the MYSQL SELECT query
+	my $sql = qq{
+	SELECT *
+	FROM taxa_bonap a, specimen b
+	WHERE
+	CONCAT_WS(" ",IF(a.Genus!="",a.Genus,NULL),IF(a.SpecificEpithet!="",a.SpecificEpithet,NULL),IF(a.SubspecificEpithet!="" && a.InfraspecificRank="",CONCAT("subspecies ",a.SubspecificEpithet),NULL),IF(a.InfraspecificRank!="",CONCAT(a.InfraspecificRank," ",a.InfraspecificEpithet), NULL),IF(a.Authorship!="",a.Authorship,NULL))
+	=
+	?
+	};	
+	my @row = $dbh->selectrow_array($sql,undef,$scientificName);
+ 	if (!@row) {
+ 		my ($newTaxaResult) = 1;
+ 		return $newTaxaResult;
+	} else {
+ 		my ($newTaxaResult) = 0;
+ 		return $newTaxaResult;
+ 	}
+}
+
+#-----get family from iPlant TRNS
+sub getTNRSFamily
+{
+	my $genus = $_[0];
+	my $species = $_[1];
+	my $ua = LWP::UserAgent->new;
+	$ua->timeout(5);
+	my $req = GET 'http://tnrs.iplantc.org/tnrsm-svc/matchNames?retrieve=best&names='.$genus.'%20'.$species;
+	my $res = $ua->request($req);
+	if ($res->is_success) {
+		my $json = $res->content;
+		my $decoded = decode_json($json);
+		if ($decoded) {
+ 			my @items = @{ $decoded->{items}};
+			my $TNRSFamily = $items[0]->{"family"};
+			return $TNRSFamily;
+		} else {
+ 			my $TNRSFamily = "";
+ 			return $TNRSFamily;
+ 		}
+ 	}
+}
+
 #-----get iPlant digitizing institution folder name
 sub getFolderName
 {
@@ -452,7 +530,7 @@ sub md5sumFile
   my $file = shift;
   my $hash = "";
   eval{
-    open(FILE, $file) or die "Can't find file $file\n";
+    open(FILE, $file) or die "sub md5sumFile: can't find file $file\n";
     my $var = Digest::MD5->new;
     $var->addfile(*FILE);
     $hash = $var->hexdigest;
@@ -462,7 +540,7 @@ sub md5sumFile
     print $@;
     return "";
   }
-  unless ($hash) { die "md5sumFile subroutine failed.\n"; }
+  unless ($hash) { die "sub md5sumFile: subroutine failed.\n"; }
   return $hash;
 }
 
@@ -552,7 +630,7 @@ sub getCollector
 	my $specimenID = $_[0];
 	#-----the MYSQL SELECT query
 	my $sql = qq{
-	SELECT c.CollectorFullName,c.GUID
+	SELECT c.CollectorFullName,c.CollectorInfo
 	FROM specimen a, spec_collector_map b, collector c
 	WHERE a.SpecimenId=b.SpecimenId AND b.CollectorId=c.CollectorId AND b.SpecimenId=?
 	};
@@ -586,7 +664,7 @@ sub updateExportDate
 	SET ExportDate=NOW() WHERE SpecimenId=?
 	};
 	my @row = $dbh->do($sql,undef,$specimenID);
-	unless (@row) { die "updateExportDate subroutine failed.\n"; }
+	unless (@row) { die "sub updateExportDate: subroutine failed.\n"; }
 }
 
 #-----escape ampersands in outfiles - needed to ensure XML will validate.
@@ -599,13 +677,13 @@ escapeAmpersands($outimgfile);
 sub escapeAmpersands
 {
 	my $file = $_[0];
-	open FH,"<$file" or die "can't open $file for reading";
+	open FH,"<$file" or die "sub escapeAmpersands: can't open $file for reading";
 	my @arr = <FH>;
 	close FH;
 	foreach(@arr){
         s/&/&amp;/g;
 	}
-	open FH, ">$file"  or die "can't open $file for writing";
+	open FH, ">$file"  or die "sub escapeAmpersands: can't open $file for writing";
 	print FH @arr;
 	close FH;
 }
