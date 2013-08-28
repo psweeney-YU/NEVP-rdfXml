@@ -75,14 +75,11 @@ print STDERR "******Log for $date******\n";
 
 #-----open data outfiles
 open (OUTFILESPEC, ">:encoding(utf8)","$config{exportiPlant}$date/rdfSpecimen_$date.xml") || die "ERROR: opening $config{exportiPlant}$date/rdfSpecimen_$date.xml\n";
-open (OUTFILEIMG, ">:encoding(utf8)","$config{exportiPlant}$date/rdfImage_$date.xml") || die "ERROR: opening $config{exportiPlant}$date/rdfImage_$date.xml\n";
 open (OUTFILESPECSYM, ">:encoding(utf8)","$config{exportSymbiota}/rdfSpecimen_$date.xml") || die "ERROR: opening $config{exportSymbiota}/rdfSpecimen_$date.xml\n";
-open (OUTFILEIMGSYM, ">:encoding(utf8)","$config{exportSymbiota}/rdfImage_$date.xml") || die "ERROR: opening $config{exportSymbiota}/rdfImage_$date.xml\n";
 
 
-my $allFiles = IO::Tee->new( \*OUTFILESPEC, \*OUTFILEIMG, \*OUTFILESPECSYM, \*OUTFILEIMGSYM);
+my $allFiles = IO::Tee->new( \*OUTFILESPEC, \*OUTFILESPECSYM);
 my $specimenDataFiles = IO::Tee->new( \*OUTFILESPEC, \*OUTFILESPECSYM);
-my $imageDataFiles = IO::Tee->new( \*OUTFILEIMG, \*OUTFILEIMGSYM);
 
 #-----connect to MYSQL database
 my $dbh = DBI->connect("DBI:mysql:".$config{db}.";host=".$config{host}."",$config{user},$config{pass},{mysql_enable_utf8 => 1}) or die "Connection Error: $DBI::errstr\n";
@@ -186,20 +183,6 @@ print {$specimenDataFiles} <<HEADERSPEC;
         <co:count xml:type="xsd:integer">$resultCount</co:count>
     </rdf:Description>
 HEADERSPEC
-
-#----header of image data file
-print {$imageDataFiles} <<HEADERIMG;
-<rdf:RDF
-	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
-	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:ac="http://rs.tdwg.org/ac/terms/"
-	xmlns:xmpRights="http://ns.adobe.com/xap/1.0/rights/"
-	xmlns:xmp="http://ns.adobe.com/xap/1.0/"
-	xmlns:dwcFP="http://filteredpush.org/ontologies/oa/dwcFP.owl#"
-	xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
-	>
-HEADERIMG
 
 #-----loop through records
 {
@@ -387,37 +370,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 				</oa:Annotation>
 DATASPECIMEN
 
-			#-----image RDF/XML content
-			print {$imageDataFiles} <<DATAIMAGE;
-				<rdf:Description rdf:about="$mediaURI">
-					<ac:metadataLanguageLiteral>en</ac:metadataLanguageLiteral>
-					<ac:metadataLanguage rdf:resource="http://id.loc.gov/vocabulary/iso639-1/en"/>
-					<xmp:MetadataDate>$timeGMT</xmp:MetadataDate>
-					<ac:digitizationDate>$createDateGMT</ac:digitizationDate>
-					<ac:associatedSpecimenReference rdf:resource="http://nevp.org/$collectionCode:$barcode"/>
-					<dc:rights>$rights</dc:rights>
-					<rdfs:comment xml:lang="en">Serialized by: NEVP rdfXMLGen.pl version $version</rdfs:comment>
-					<dwc:scientificName>$scientificName</dwc:scientificName>
-					<rdfs:comment xml:lang="en">Metadata associated with NEVP image</rdfs:comment>
-					<dc:type>StillImage</dc:type>
-					<dc:modified>$modificationDateGMT</dc:modified>
-					<dc:identifier>$mediaUUID</dc:identifier>
-					<xmpRights:Owner>$institution</xmpRights:Owner>
-					<dc:creator>$username</dc:creator>
-					<xmpRights:UsageTerms>$usage</xmpRights:UsageTerms>
-					<ac:hasAccessPoint>
-						<rdf:Description>
-							<ac:variant>Offline</ac:variant>
-							<ac:accessURI>file:/$finalPath</ac:accessURI>
-							<dc:format>$suffix</dc:format>
-							<ac:hashFunction>MD5</ac:hashFunction>						
-							<ac:hashValue>$fileMD5</ac:hashValue>
-						</rdf:Description>
-					</ac:hasAccessPoint>
-				</rdf:Description>
-DATAIMAGE
-
-			print OUTFILELOG "data written to files, ";
+			print OUTFILELOG "data written to file, ";
 			
 			#-----set specimen.ExportDate 
 			updateExportDate($specimenID);
@@ -442,9 +395,7 @@ print {$allFiles} "</rdf:RDF>\n";
 
 #-----close outfiles
 close (OUTFILESPEC);
-close (OUTFILEIMG);
 close (OUTFILESPECSYM);
-close (OUTFILEIMGSYM);
 close (OUTFILELOG);
 
 #-----SUBFUNCTIONS
@@ -667,12 +618,10 @@ sub updateExportDate
 	unless (@row) { die "sub updateExportDate: subroutine failed.\n"; }
 }
 
-#-----escape ampersands in outfiles - needed to ensure XML will validate.
+#-----escape ampersands in outfile - needed to ensure XML will validate.
 my $outspecfile = "$config{exportiPlant}$date/rdfSpecimen_$date.xml";
-my $outimgfile = "$config{exportiPlant}$date/rdfImage_$date.xml";
 
 escapeAmpersands($outspecfile);
-escapeAmpersands($outimgfile);
 
 sub escapeAmpersands
 {
