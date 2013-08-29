@@ -578,6 +578,7 @@ sub gettaxonID
 #-----get collector's full name and GUID
 sub getCollector
 {
+	no warnings 'uninitialized';
 	my $specimenID = $_[0];
 	#-----the MYSQL SELECT query
 	my $sql = qq{
