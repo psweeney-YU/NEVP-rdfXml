@@ -619,10 +619,12 @@ sub updateExportDate
 	unless (@row) { die "sub updateExportDate: subroutine failed.\n"; }
 }
 
-#-----escape ampersands in outfile - needed to ensure XML will validate.
-my $outspecfile = "$config{exportiPlant}$date/rdfSpecimen_$date.xml";
+#-----escape ampersands in outfiles - needed to ensure XML will validate.
+my $outiPlantfile = "$config{exportiPlant}$date/rdfSpecimen_$date.xml";
+my $outSymbiotafile = "$config{exportiPlant}$date/rdfSpecimen_$date.xml";
 
-escapeAmpersands($outspecfile);
+escapeAmpersands($outiPlantfile);
+escapeAmpersands($outSymbiotafile);
 
 sub escapeAmpersands
 {
