@@ -621,7 +621,7 @@ sub updateExportDate
 
 #-----escape ampersands in outfiles - needed to ensure XML will validate.
 my $outiPlantfile = "$config{exportiPlant}$date/rdfSpecimen_$date.xml";
-my $outSymbiotafile = "$config{exportiPlant}$date/rdfSpecimen_$date.xml";
+my $outSymbiotafile = "$config{exportSymbiota}/rdfSpecimen_$date.xml";
 
 escapeAmpersands($outiPlantfile);
 escapeAmpersands($outSymbiotafile);
