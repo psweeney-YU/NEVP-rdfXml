@@ -43,6 +43,7 @@ use IPC::System::Simple qw(system capture);
 use JSON qw(decode_json);
 use LWP::UserAgent;
 use HTTP::Request::Common qw(GET);
+use FindBin;
 
 binmode STDOUT, ":encoding(UTF-8)";
 
@@ -52,7 +53,7 @@ our %in;
 my $version = '$Rev$';
 $version =~ s{(\$Rev:) ([0-9]*) (\$)}{$2};
 
-my %config = do './rdfXmlGenConfig.pl';
+my %config = do $FindBin::Bin.'/rdfXmlGenConfig.pl';
 
 my $d = localtime->ymd;
 my $t = localtime->hms("");
