@@ -232,11 +232,11 @@ my $outputFileMD5;
 #----------Set final path variable
 if ( ( index ($institution, "HUH" ) != -1 ) || ( index ($institution, "Harvard" )  != -1 ) ) {
 	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
-	$finalPath = "/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$suffix";
+	$finalPath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$suffix";
 	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
 } else {
 	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
-	$finalPath = "/iplant/home/shared/NEVP/$folderName/$date/$barcodeFile.$suffix";
+	$finalPath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$barcodeFile.$suffix";
 	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
 }
 
