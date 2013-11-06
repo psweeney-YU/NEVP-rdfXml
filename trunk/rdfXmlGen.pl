@@ -278,6 +278,9 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 			#-----get collector's full name & GUID
 			my ($collectorName,$collectorGUID) = getCollector($specimenID);
 			
+			#-----get family from iPlant TRNS using genus & species
+			my $TRNSfamily = getTNRSFamily($genus,$species);
+			
 			#-----specimen RDF/XML content
 			print {$specimenDataFiles} <<DATASPECIMEN;
 				<oa:Annotation rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
@@ -303,6 +306,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 							<dwcFP:hasIdentification>
 								<dwcFP:Identification rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
 									<dwcFP:isFiledUnderNameInCollection>$collectionCode</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>$TRNSfamily</dwc:family>
 									<dwc:scientificName>$scientificName</dwc:scientificName>
 									<dwc:genus>$genus</dwc:genus>
 									<dwc:specificEpithet>$species</dwc:specificEpithet>
