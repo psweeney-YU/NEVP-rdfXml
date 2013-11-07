@@ -221,10 +221,12 @@ if (getNewTaxonResult($scientificName) == 1) {
 
 my ($name,$path,$suffix) = fileparse("$imagePath$imageName",qr"\..[^.]*$"); 
 $suffix =~ s/\.//g;
+my $derivSuffix = "jpg";
 my $barcodeFile = $barcode;
 $barcodeFile =~ s/\.//g;
 my $copyStatus;
 my $finalPath;
+my $derivativePath;
 my $folderName = getFolderName($collectionCode);
 my $outputFileMD5;
 
@@ -233,10 +235,12 @@ my $outputFileMD5;
 if ( ( index ($institution, "HUH" ) != -1 ) || ( index ($institution, "Harvard" )  != -1 ) ) {
 	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
 	$finalPath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$suffix";
+	$derivativePath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$derivSuffix";
 	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
 } else {
 	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
 	$finalPath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$barcodeFile.$suffix";
+	$derivativePath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$barcodeFile.$derivSuffix";
 	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
 }
 
@@ -346,6 +350,13 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 									<dc:format>$suffix</dc:format>
 									<ac:hashFunction>MD5</ac:hashFunction>						
 									<ac:hashValue>$fileMD5</ac:hashValue>
+								</rdf:Description>
+							</ac:hasAccessPoint>
+							<ac:hasAccessPoint>
+								<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
+									<ac:variant>Offline</ac:variant>
+									<ac:accessURI>file:/$derivativePath</ac:accessURI>
+									<dc:format>$derivSuffix</dc:format>
 								</rdf:Description>
 							</ac:hasAccessPoint>	
 						</dwcFP:Occurence>
