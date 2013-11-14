@@ -120,6 +120,7 @@ my $sql = "
 		a.ModificationDate,		#dcterms:modified, applies to specimen & image metadata
 		a.ExportDate,		#date specimen record serialized in RDF/XML format
 		a.Checksum,		#md5 hash checksum of image file
+		a.StorageLocation, #place in herbarium where specimen stored, from pre-capture app
 		b.ImageRawPath,		#path to image file on apparatus computer
 		b.ImageRawName,		#file name of image 
 		c.Username,		#username of user capturing specimen data and imaging specimen
@@ -173,11 +174,13 @@ print {$specimenDataFiles} <<HEADERSPEC;
 	xmlns:oad="http://filteredpush.org/ontologies/oa/oad.rdf#"
 	xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dcmitype="http://purl.org/dc/dcmitype/"
 	xmlns:vivo="http://vivoweb.org/ontology/core#"
 	xmlns:obo="http://purl.obolibrary.org/obo/"
 	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
 	xmlns:ac="http://rs.tdwg.org/ac/terms/"
+    xmlns:xmpRights="http://ns.adobe.com/xap/1.0/rights/"
 	>
 	<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }/">
         <rdfs:comment xml:lang="en">Document of new NEVP specimen records expressed as OA annotations.</rdfs:comment>
@@ -190,7 +193,7 @@ HEADERSPEC
 no warnings 'uninitialized';
 while (my ($specimenID,$barcode,$scientificName,$family,$genus,$species,$rank,$infraSpecific,
 $author,$qualifier,$collectorNumber,$verbatimDate,$beginDate,$endDate,$country,
-$county,$state,$town,$createDate,$modificationDate,$exportDate,$checksum,$imagePath,$imageName,$username,
+$county,$state,$town,$createDate,$modificationDate,$exportDate,$checksum,$storageLocation,$imagePath,$imageName,$username,
 $useremail,$userURL,$userUUID,$collectionCode,$BCIcollectionID,$institution,$rights,$usage) = $sth->fetchrow_array) {
 
 #-----insert taxa into taxon table, if not already present
@@ -341,24 +344,30 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 							<dwc:municipality>$town</dwc:municipality>
 							<dc:created>$createDateGMT</dc:created>
 							<dwc:modified>$modificationDateGMT</dwc:modified>
-							<obo:OBI_0000967>14.4</obo:OBI_0000967>
-							<dwcFP:hasAssociatedMedia rdf:resource="$mediaURI"/>
-							<ac:hasAccessPoint>
-								<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
-									<ac:variant>Offline</ac:variant>
-									<ac:accessURI>file:/$finalPath</ac:accessURI>
-									<dc:format>$suffix</dc:format>
-									<ac:hashFunction>MD5</ac:hashFunction>						
-									<ac:hashValue>$fileMD5</ac:hashValue>
-								</rdf:Description>
-							</ac:hasAccessPoint>
-							<ac:hasAccessPoint>
-								<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
-									<ac:variant>Offline</ac:variant>
-									<ac:accessURI>file:/$derivativePath</ac:accessURI>
-									<dc:format>$derivSuffix</dc:format>
-								</rdf:Description>
-							</ac:hasAccessPoint>	
+							<obo:OBI_0000967>$storageLocation</obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="$mediaURI">
+                                    <dc:rights>$rights</dc:rights>
+                                    <xmpRights:Owner>$institution</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>$usage</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file:/$finalPath</ac:accessURI>
+	    							    	<dc:format>$suffix</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>$fileMD5</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file:/$derivativePath</ac:accessURI>
+									        <dc:format>$derivSuffix</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
 						</dwcFP:Occurence>
 					</oa:hasBody>
 					<oad:hasEvidence rdf:resource="$mediaURI" />				
