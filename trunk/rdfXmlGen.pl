@@ -89,7 +89,7 @@ my $dbh = DBI->connect("DBI:mysql:".$config{db}.";host=".$config{host}."",$confi
 my $updateSciNamesql = qq{
 	UPDATE specimen b
 	SET b.ScientificName=CONCAT_WS(" ",IF(b.Genus!="",b.Genus,NULL),IF(b.SpecificEpithet!="",b.SpecificEpithet,NULL),IF(b.InfraspecificEpithet!="" && b.InfraspecificRank!="",CONCAT(b.InfraspecificRank," ",b.InfraspecificEpithet),NULL),IF(b.ScientificNameAuthorship!="",b.ScientificNameAuthorship,NULL))
-	WHERE b.ScientificName=""
+	WHERE (b.ExportDate=\"0000-00-00 00:00:00\" OR b.ExportDate IS NULL) AND b.MissingInfo=\"0\"
 	};
 	
 my $sthUpdateSciName = $dbh->prepare($updateSciNamesql);
@@ -338,7 +338,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 									<dwc:eventRemarks>$eventRemarks</dwc:eventRemarks>
 								</dwcFP:Event>
 							</dwcFP:hasCollectingEvent>
-							<dwc:country>$country</dwc:country>
+							<dwc:country>United States</dwc:country>
 							<dwc:stateProvince>$state</dwc:stateProvince>
 							<dwc:county>$county</dwc:county>
 							<dwc:municipality>$town</dwc:municipality>
