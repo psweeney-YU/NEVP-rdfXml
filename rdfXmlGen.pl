@@ -220,6 +220,10 @@ if (getNewTaxonResult($scientificName) == 1) {
 	}
 }
 
+#-----check if town is in gazatteer & get county; otherwise move town to dwc:locality
+my ($state,$county,$town,$locality) = processTown($state,$town);
+
+
 #-----copy image file to export folder
 
 my ($name,$path,$suffix) = fileparse("$imagePath$imageName",qr"\..[^.]*$"); 
@@ -342,6 +346,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 							<dwc:stateProvince>$state</dwc:stateProvince>
 							<dwc:county>$county</dwc:county>
 							<dwc:municipality>$town</dwc:municipality>
+							<dwc:locality>$locality</dwc:locality>
 							<dc:created>$createDateGMT</dc:created>
 							<dwc:modified>$modificationDateGMT</dwc:modified>
 							<obo:OBI_0000967>$storageLocation</obo:OBI_0000967>
@@ -446,6 +451,77 @@ sub getNewTaxonResult
  		my ($newTaxaResult) = 0;
  		return $newTaxaResult;
  	}
+}
+
+#-----get full state names for abbreviations (New England towns only)
+sub expandState
+{		
+	my $state = $_[0];
+	
+		if ($state =~ /^(CT)$/) {
+			my $state = "Connecticut";
+			return $state;
+		} elsif ($state =~ /^(MA)$/) { 
+			my $state = "Massachusetts";
+			return $state;
+		} elsif ($state =~ /^(ME)$/) { 
+			my $state = "Maine";
+			return $state;
+		} elsif ($state =~ /^(NH)$/) { 
+			my $state = "New Hampshire";
+			return $state;
+		} elsif ($state =~ /^(RI)$/) { 
+			my $state = "Rhode Island";
+			return $state;
+		} elsif ($state =~ /^(VT)$/) { 
+			my $state = "Vermont";
+			return $state;
+		} else {
+			my $state = $state;
+			return $state;
+		}
+}
+
+#-----check if town is in gazatteer & get county; otherwise move data in town field to dwc:locality
+sub processTown
+{
+	my $origState = $_[0];
+	my $state = expandState($origState);
+	my $town = $_[1];
+	my @params = ($state,$town);
+		
+	if ($state =~ /^(CT|Connecticut|MA|Massachusetts|ME|Maine|NH|New Hampshire|RI|Rhode Island|VT|Vermont)$/) {		
+
+			#-----the MYSQL SELECT query
+			no warnings 'uninitialized';
+			my $sql = qq{
+			SELECT county
+			FROM NE_Gazatteer
+			WHERE
+			state=? AND townName=?
+			};
+			my @row = $dbh->selectrow_array($sql,undef,@params);
+			if (!@row) {
+				my ($state) = $state;
+				my ($county) = "";
+				my ($locality) = $town;
+				my ($town) = "";
+				return ($state, $county, $town, $locality);
+			} else {
+				my ($state) = $state;
+				my ($county) = @row;
+				my ($town) = $town;
+				my ($locality) = "";
+				return ($state, $county, $town, $locality);
+			}
+		} else {
+			my ($state) = $state;
+			my ($county) = "";
+			my ($locality) = "";
+			my ($town) = $town;
+			return ($state, $county, $town, $locality);
+		}
+		
 }
 
 #-----get family from iPlant TRNS
