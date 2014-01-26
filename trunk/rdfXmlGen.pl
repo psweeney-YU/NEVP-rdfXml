@@ -85,11 +85,11 @@ my $specimenDataFiles = IO::Tee->new( \*OUTFILESPEC, \*OUTFILESPECSYM);
 #-----connect to MYSQL database
 my $dbh = DBI->connect("DBI:mysql:".$config{db}.";host=".$config{host}."",$config{user},$config{pass},{mysql_enable_utf8 => 1}) or die "Connection Error: $DBI::errstr\n";
 
-#-----MYSQL query to popluate specimen.scientificName field, when not populated
+#-----MYSQL query to popluate specimen.scientificName field, when not a hybrid - will rebuild scientificName with author
 my $updateSciNamesql = qq{
 	UPDATE specimen b
 	SET b.ScientificName=CONCAT_WS(" ",IF(b.Genus!="",b.Genus,NULL),IF(b.SpecificEpithet!="",b.SpecificEpithet,NULL),IF(b.InfraspecificEpithet!="" && b.InfraspecificRank!="",CONCAT(b.InfraspecificRank," ",b.InfraspecificEpithet),NULL),IF(b.ScientificNameAuthorship!="",b.ScientificNameAuthorship,NULL))
-	WHERE (b.ExportDate=\"0000-00-00 00:00:00\" OR b.ExportDate IS NULL) AND b.MissingInfo=\"0\"
+	WHERE (b.ExportDate=\"0000-00-00 00:00:00\" OR b.ExportDate IS NULL) AND b.MissingInfo=\"0\"AND b.ScientificName NOT LIKE "%×%"
 	};
 	
 my $sthUpdateSciName = $dbh->prepare($updateSciNamesql);
@@ -182,7 +182,7 @@ print {$specimenDataFiles} <<HEADERSPEC;
 	xmlns:ac="http://rs.tdwg.org/ac/terms/"
     xmlns:xmpRights="http://ns.adobe.com/xap/1.0/rights/"
 	>
-	<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }/">
+	<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
         <rdfs:comment xml:lang="en">Document of new NEVP specimen records expressed as OA annotations.</rdfs:comment>
         <co:count xml:type="xsd:integer">$resultCount</co:count>
     </rdf:Description>
@@ -225,7 +225,6 @@ my ($state,$county,$town,$locality) = processTown($state,$town);
 
 
 #-----copy image file to export folder
-
 my ($name,$path,$suffix) = fileparse("$imagePath$imageName",qr"\..[^.]*$"); 
 $suffix =~ s/\.//g;
 my $derivSuffix = "jpg";
@@ -407,8 +406,7 @@ DATASPECIMEN
 			
 			#-----delete original file in workspace directory
 			if ( $fileMD5 eq $outputFileMD5 ) {
-					#UNCOMMENT LINE BELOW AFTER TESTING
-					#unlink "$imagePath$imageName" or warn "Could not delete $imagePath$imageName";
+					unlink "$imagePath$imageName" or warn "Could not delete $imagePath$imageName";
 					print OUTFILELOG "original image file deleted.\n";
 				} else {
 					print OUTFILELOG "original image file not deleted - checksums differ.\n";
@@ -527,6 +525,7 @@ sub processTown
 #-----get family from iPlant TRNS
 sub getTNRSFamily
 {
+	no warnings 'uninitialized';
 	my $genus = $_[0];
 	my $species = $_[1];
 	my $ua = LWP::UserAgent->new;
