@@ -406,10 +406,10 @@ DATASPECIMEN
 			
 			#-----delete original file in workspace directory
 			if ( $fileMD5 eq $outputFileMD5 ) {
-					unlink "$imagePath$imageName" or warn "Could not delete $imagePath$imageName";
-					print OUTFILELOG "original image file deleted.\n";
+					rmtree($imagePath) or warn "Could not delete $imagePath";
+					print OUTFILELOG "original images deleted.\n";
 				} else {
-					print OUTFILELOG "original image file not deleted - checksums differ.\n";
+					print OUTFILELOG "original images not deleted - dng checksums differ.\n";
 				}
 			} else {
 				print OUTFILELOG "$imagePath$imageName not found.\n";
