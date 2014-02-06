@@ -321,7 +321,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 									<dwc:scientificName>$scientificName</dwc:scientificName>
 									<dwc:genus>$genus</dwc:genus>
 									<dwc:specificEpithet>$species</dwc:specificEpithet>
-									<dwc:infraspecificRank>$rank</dwc:infraspecificRank>
+									<dwcFP:infraspecificRank>$rank</dwcFP:infraspecificRank>
 									<dwc:infraspecificEpithet>$infraSpecific</dwc:infraspecificEpithet>
 									<dwc:scientificNameAuthorship>$author</dwc:scientificNameAuthorship>
 									<dwc:identificationQualifier>$qualifier</dwc:identificationQualifier>
