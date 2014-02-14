@@ -237,9 +237,9 @@ my $derivativePath;
 my $folderName = getFolderName($collectionCode);
 my $outputFileMD5;
 
-#----------If HUH add collectionCode prefix to filename
+#----------If HUH or New Eng Bot Club add collectionCode prefix to filename
 #----------Set final path variable
-if ( ( index ($institution, "HUH" ) != -1 ) || ( index ($institution, "Harvard" )  != -1 ) ) {
+if ( ( index ($institution, "HUH" ) != -1 ) || ( index ($institution, "Harvard" )  != -1 ) || ( index ($institution, "New England Botanical Club" )  != -1 ) ) {
 	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
 	$finalPath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$suffix";
 	$derivativePath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$derivSuffix";
