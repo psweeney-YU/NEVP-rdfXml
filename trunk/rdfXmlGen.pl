@@ -131,6 +131,7 @@ my $sql = "
 		d.CollectionCode,		#dwc:collectionCode for collection housing specimen
 		d.BCICollectionId,		#Biological Collections Index LSID for collection housing specimen
 		e.InstituteName,		#name of institution, dwc:institutionCode
+		e.InstituteInfo,		#xmpRights:Owner
 		f.rights,		#dcterms:rights, used in image RDF/XML document
 		f.usage		#xmpRights:UsageTerms, used in image RDF/XML document
 		#f.webStatement			#xmpRights:WebStatement, used in image RDF/XML document
@@ -195,7 +196,7 @@ no warnings 'uninitialized';
 while (my ($specimenID,$barcode,$scientificName,$family,$genus,$species,$rank,$infraSpecific,
 $author,$qualifier,$collectorNumber,$verbatimDate,$beginDate,$endDate,$country,
 $county,$state,$town,$createDate,$modificationDate,$exportDate,$checksum,$storageLocation,$imagePath,$imageName,$username,
-$useremail,$userURL,$userUUID,$collectionCode,$BCIcollectionID,$institution,$rights,$usage) = $sth->fetchrow_array) {
+$useremail,$userURL,$userUUID,$collectionCode,$BCIcollectionID,$institution,$institutionInfo,$rights,$usage) = $sth->fetchrow_array) {
 
 #-----insert taxa into taxon table, if not already present
 my $newTaxonResult = getNewTaxonResult($scientificName);		
@@ -353,7 +354,7 @@ my $fileMD5 = md5sumFile("$imagePath$imageName");
 							<dwcFP:hasAssociatedMedia>
                                 <dcmitype:Image rdf:about="$mediaURI">
                                     <dc:rights>$rights</dc:rights>
-                                    <xmpRights:Owner>$institution</xmpRights:Owner>
+                                    <xmpRights:Owner>$institutionInfo</xmpRights:Owner>
                                     <xmpRights:UsageTerms>$usage</xmpRights:UsageTerms>
 		    					    <ac:hasAccessPoint>
 	    							    <rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
