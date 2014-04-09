@@ -156,8 +156,8 @@ my $sql = "
 my $sth = $dbh->prepare($sql);
 $sth->execute() or die "SQL Error: $DBI::errstr\n";
 
-#-----get count of records returned
-my $resultCount = $sth->rows;
+#-----set count variable for number of records exported
+my $count = 0;
 
 #-----create the RDF/XML documents
 #-----headers
@@ -186,7 +186,7 @@ print {$specimenDataFiles} <<HEADERSPEC;
 	>
 	<rdf:Description rdf:about="urn:uuid:@{ [create_UUID_as_string(UUID_V4)] }">
         <rdfs:comment xml:lang="en">Document of new NEVP specimen records expressed as OA annotations.</rdfs:comment>
-        <co:count xml:type="xsd:integer">$resultCount</co:count>
+        <co:count xml:type="xsd:integer">XXresultCountXX</co:count>
     </rdf:Description>
 HEADERSPEC
 
@@ -240,27 +240,30 @@ my $outputFileMD5;
 
 #----------If HUH or New Eng Bot Club add collectionCode prefix to filename
 #----------Set final path variable
-if ( ( index ($institution, "HUH" ) != -1 ) || ( index ($institution, "Harvard" )  != -1 ) || ( index ($institution, "New England Botanical Club" )  != -1 ) ) {
-	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
-	$finalPath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$suffix";
-	$derivativePath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$derivSuffix";
-	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
-} else {
-	$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
-	$finalPath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$barcodeFile.$suffix";
-	$derivativePath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$barcodeFile.$derivSuffix";
-	$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
+if (-e "$imagePath$imageName") {
+	if ( ( index ($institution, "HUH" ) != -1 ) || ( index ($institution, "Harvard" )  != -1 ) || ( index ($institution, "New England Botanical Club" )  != -1 ) ) {
+		$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
+		$finalPath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$suffix";
+		$derivativePath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$collectionCode$barcodeFile.$derivSuffix";
+		$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$collectionCode$barcodeFile.$suffix");
+	} else {
+		$copyStatus = copy("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
+		$finalPath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$barcodeFile.$suffix";
+		$derivativePath = "/data.iplantcollaborative.org/iplant/home/shared/NEVP/$folderName/$date/$barcodeFile.$derivSuffix";
+		$outputFileMD5 = md5sumFile("$imagePath$imageName","$config{exportiPlant}$date/$barcodeFile.$suffix");
+	}
 }
 
-#-----get md5 checksum of file
-my $fileMD5 = md5sumFile("$imagePath$imageName");
 
 #-----add data to exchange files
 	if (-e "$imagePath$imageName") {
-	
+
 		if ($copyStatus) {
 		
-			print OUTFILELOG "target: $imagePath$imageName, image file copied, ";	
+			#-----get md5 checksum of file
+			my $fileMD5 = md5sumFile("$imagePath$imageName");
+		
+			print OUTFILELOG "barcode: $barcode; image: $imagePath$imageName, image file copied, ";	
 		
 			my $time = Time::Piece->strptime(localtime->datetime, "%Y-%m-%dT%H:%M:%S");
 			$time -= $time->localtime->tzoffset;
@@ -406,6 +409,9 @@ DATASPECIMEN
 			#-----set specimen.ExportDate 
 			updateExportDate($specimenID);
 			
+			#-----increment annotation counter
+			$count ++;
+			
 			#-----delete original file in workspace directory
 			if ( $fileMD5 eq $outputFileMD5 ) {
 					rmtree($imagePath) or warn "Could not delete $imagePath";
@@ -414,8 +420,10 @@ DATASPECIMEN
 					print OUTFILELOG "original images not deleted - dng checksums differ.\n";
 				}
 			} else {
-				print OUTFILELOG "$imagePath$imageName not found.\n";
+				print OUTFILELOG "image not file copied, problem with copy().\n";
 			}
+		} else {
+			print OUTFILELOG "barcode: $barcode; image: $imagePath$imageName, $imagePath$imageName not found, image file not copied, record not exported.\n";
 		}
 	}
 }
@@ -738,6 +746,25 @@ sub escapeAmpersands
         s/&/&amp;/g;
 	}
 	open FH, ">$file"  or die "sub escapeAmpersands: can't open $file for writing";
+	print FH @arr;
+	close FH;
+}
+
+#-----populate <co:count></co:count>
+countAnnotations($outiPlantfile,$count);
+countAnnotations($outSymbiotafile,$count);
+
+sub countAnnotations
+{
+	my $file = $_[0];
+	my $count = $_[1];
+	open FH,"<$file" or die "sub countAnnotations: can't open $file for reading";
+	my @arr = <FH>;
+	close FH;
+	foreach(@arr){
+        s/XXresultCountXX/$count/g;
+	}
+	open FH, ">$file"  or die "sub countAnnotations: can't open $file for writing";
 	print FH @arr;
 	close FH;
 }
