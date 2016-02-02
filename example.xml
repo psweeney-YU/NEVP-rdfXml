@@ -1,0 +1,1063 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+	xmlns:dwcFP="http://filteredpush.org/ontologies/oa/dwcFP.owl#" 
+	xmlns:foaf="http://xmlns.com/foaf/0.1/"
+	xmlns:cnt="http://www.w3.org/2011/content#"
+	xmlns:oa="http://www.w3.org/ns/oa#"
+	xmlns:co="http://purl.org/ontology/co/core#"
+	xmlns:oad="http://filteredpush.org/ontologies/oa/oad.rdf#"
+	xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+	xmlns:vivo="http://vivoweb.org/ontology/core#"
+	xmlns:obo="http://purl.obolibrary.org/obo/"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:ac="http://rs.tdwg.org/ac/terms/"
+    xmlns:xmpRights="http://ns.adobe.com/xap/1.0/rights/"
+	>
+	<rdf:Description rdf:about="urn:uuid:7c86d894-f688-44e0-84d3-502738d9bcc7">
+        <rdfs:comment xml:lang="en">Document of new NEVP specimen records expressed as OA annotations.</rdfs:comment>
+        <co:count xml:type="xsd:integer">10</co:count>
+    </rdf:Description>
+				<oa:Annotation rdf:about="urn:uuid:34ca3afe-fa3a-461a-acce-ee9bb63242e0">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:98f5e497-7e33-4ecc-9650-ee8eb0a0ce73">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:b6711269-8c45-46c5-ba94-b280fe1396a9">
+									<dwc:collectionCode>NEBC</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:66962886-e401-4840-86fa-0008d68c8af0">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>01036129</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15868"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>NEBC</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:72cf8e07-6eec-46db-96b0-2682107b60f2">
+									<dwcFP:isFiledUnderNameInCollection>NEBC</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>1</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:80b5b456-365d-4e4b-a697-f86f2eef96d8">
+									<dwc:eventDate>1879-08-26</dwc:eventDate>
+									<dwc:verbatimEventDate>Aug. 26, 1879</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>South Yarmouth</dwc:locality>
+							<dc:created>2015-12-22T19:29:55Z</dc:created>
+							<dwc:modified>2015-12-22T19:29:55Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:9432ba5e-6c7d-4846-b430-769a88a8c895">
+                                    <dc:rights>Copyright © 2015 New England Botanical Club</dc:rights>
+                                    <xmpRights:Owner>New England Botanical Club</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:2ac7169b-7201-4036-a2d0-d2f25c6b74b1">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036129.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>a45e36c69b833cb66bd99935314e3166</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:e8c13247-80fc-4a26-9ae5-9e696a540af5">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036129.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:9432ba5e-6c7d-4846-b430-769a88a8c895" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:229b92c5-e8a8-4e9a-848e-c42dd402302a" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:29:55Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:18Z</oa:serializedAt>
+				</oa:Annotation>
+				<oa:Annotation rdf:about="urn:uuid:2a272691-d0ef-42e1-be07-a077d44e189e">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:54799689-fc9c-40b5-8679-1e5992e38294">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:86867258-781e-40bd-b22b-128ce651664b">
+									<dwc:collectionCode>NEBC</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:94007069-baee-4605-ac75-18ca3c0d4c2b">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>00816315</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15868"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>NEBC</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:3820565b-6286-4ea3-82e0-5a72a47386ae">
+									<dwcFP:isFiledUnderNameInCollection>NEBC</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>1</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:1a9ee8ac-361d-48ce-acea-8046dade2606">
+									<dwc:eventDate>1879-07-14</dwc:eventDate>
+									<dwc:verbatimEventDate>July 14, 1879</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>South Yarmouth</dwc:locality>
+							<dc:created>2015-12-22T19:30:20Z</dc:created>
+							<dwc:modified>2015-12-22T19:30:20Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:1a0c70a9-a679-4c4c-9884-8636ea996c8c">
+                                    <dc:rights>Copyright © 2015 New England Botanical Club</dc:rights>
+                                    <xmpRights:Owner>New England Botanical Club</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:c24bfc89-220b-4414-8c77-c2473e5510df">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC00816315.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>efa8b3d3bd98df32b23eabe5ed6ef081</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:a84c68b8-3ec9-40aa-aad0-deb3dedae846">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC00816315.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:1a0c70a9-a679-4c4c-9884-8636ea996c8c" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:26ef10a5-ca92-4ce6-b656-1622686220b1" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:30:20Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:21Z</oa:serializedAt>
+				</oa:Annotation>
+				<oa:Annotation rdf:about="urn:uuid:6880a87b-c299-4cca-a62a-248262c00e60">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:02bea675-940f-406b-acb8-2ad7b462b8f8">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:9c13ba9e-62dc-42f5-a84d-a0184673a63a">
+									<dwc:collectionCode>NEBC</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:009efa5e-5afd-4e11-bc99-fc57b841f664">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>01036128</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15868"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>NEBC</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:e2137ea0-d618-483d-ae7f-3a4b56238ebf">
+									<dwcFP:isFiledUnderNameInCollection>NEBC</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>2</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:de9e66dc-501f-483d-b2be-e069146420a0">
+									<dwc:eventDate>1898-09-04</dwc:eventDate>
+									<dwc:verbatimEventDate>Sept. 4, 1898</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>Barnstable Town</dwc:locality>
+							<dc:created>2015-12-22T19:30:36Z</dc:created>
+							<dwc:modified>2015-12-22T19:30:36Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:e69ebadd-e825-42e3-a01a-a0af54f15055">
+                                    <dc:rights>Copyright © 2015 New England Botanical Club</dc:rights>
+                                    <xmpRights:Owner>New England Botanical Club</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:7a54da47-728c-44b2-9c38-fc298ad7208f">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036128.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>cd344f92e75682e13deefbacd3028f75</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:204f1021-0848-46cc-b0de-245dfa09d28c">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036128.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:e69ebadd-e825-42e3-a01a-a0af54f15055" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:26673c1c-0827-4224-9436-72ad4e113876" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:30:36Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:22Z</oa:serializedAt>
+				</oa:Annotation>
+				<oa:Annotation rdf:about="urn:uuid:58a0463f-82e4-4a89-8c3c-6863a8b5b413">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:46c230ec-eccc-4ee6-a61b-1ccfd63fdc5c">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:d066a8d1-e849-4456-b099-803156709861">
+									<dwc:collectionCode>NEBC</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:bc061859-5c54-4e51-8400-e488febb9e74">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>01036130</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15868"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>NEBC</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:b467f0dc-56d9-4a05-a26f-1c9754586c08">
+									<dwcFP:isFiledUnderNameInCollection>NEBC</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>2834</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:4e55ac15-0e3b-4a32-b464-865e820c4a14">
+									<dwc:eventDate>1914-08-02</dwc:eventDate>
+									<dwc:verbatimEventDate>Aug. 2, 1914</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>Bourne</dwc:locality>
+							<dc:created>2015-12-22T19:30:58Z</dc:created>
+							<dwc:modified>2015-12-22T19:30:58Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:2abc8a05-ecaa-4ecc-b69e-a45698ec2e0e">
+                                    <dc:rights>Copyright © 2015 New England Botanical Club</dc:rights>
+                                    <xmpRights:Owner>New England Botanical Club</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:06facaa6-e071-4819-88e4-06bf56a24899">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036130.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>fa81258461ed11b0db5c0ea42d9c8821</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:40d8d6cb-54cd-4893-9646-0c3350f73e47">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036130.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:2abc8a05-ecaa-4ecc-b69e-a45698ec2e0e" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:48635e25-1655-4648-8098-8aac8eadca41" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:30:58Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:23Z</oa:serializedAt>
+				</oa:Annotation>
+				<oa:Annotation rdf:about="urn:uuid:c8bc12ef-6482-4a2f-bec2-6e4f1af8e2d2">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:2439e04b-52ae-4e9e-b844-08e0e6189e5e">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:626b78b2-52fa-4293-86fa-de277a3ec660">
+									<dwc:collectionCode>NEBC</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:40f9a0f2-fcb3-4cdb-bae9-1407ea2ba6dc">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>01036131</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15868"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>NEBC</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:62281e5c-1a08-4408-8a2d-5860f0bf582c">
+									<dwcFP:isFiledUnderNameInCollection>NEBC</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>17310</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:5677c48b-9a63-449e-9666-e2f5eca5b8c5">
+									<dwc:eventDate>1918-08-22</dwc:eventDate>
+									<dwc:verbatimEventDate>August 22, 1918</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>Dennis</dwc:locality>
+							<dc:created>2015-12-22T19:31:21Z</dc:created>
+							<dwc:modified>2015-12-22T19:31:21Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:7cf7589f-0c47-401f-b0bf-72dbae23086c">
+                                    <dc:rights>Copyright © 2015 New England Botanical Club</dc:rights>
+                                    <xmpRights:Owner>New England Botanical Club</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:8cd66a58-9274-4e6e-aabb-6a66eaa6721f">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036131.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>f03c9ab13f1575efc2fc3a853846f0c5</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:6481f4df-40cb-4e06-b289-3a4a9c9af2b5">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036131.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:7cf7589f-0c47-401f-b0bf-72dbae23086c" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:207748b4-0a1b-464a-8aa8-1e705ef86e30" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:31:21Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:25Z</oa:serializedAt>
+				</oa:Annotation>
+				<oa:Annotation rdf:about="urn:uuid:f6f9a2ae-66c7-42a3-ae2d-363554f7bc8a">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:10ede2a0-c09f-4069-8ebc-0a11f4f2f883">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:fcecf46c-8ca4-405a-90dd-ec813e9b00f6">
+									<dwc:collectionCode>GH</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:707df20d-24b1-468b-b84f-da9e7e0aba91">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>01036132</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15631"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>GH</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:06b5fcad-020b-4afa-b8ce-56e0a271d4b5">
+									<dwcFP:isFiledUnderNameInCollection>GH</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>17312</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:42b63ad3-cea2-4221-a85a-705d46a9c493">
+									<dwc:eventDate>1918-07-28</dwc:eventDate>
+									<dwc:verbatimEventDate>July 28, 1918</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>Harwich</dwc:locality>
+							<dc:created>2015-12-22T19:31:41Z</dc:created>
+							<dwc:modified>2015-12-22T19:31:41Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:e04922bd-5209-4a64-8ac3-fa1bbab32802">
+                                    <dc:rights>Copyright © 2015 President and Fellows of Harvard College</dc:rights>
+                                    <xmpRights:Owner>Harvard University Herbaria</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:92c8e2ac-58f5-4aa9-8a21-be28ae62ce74">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/GH01036132.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>683824c317eb0bbef0b4c56f391350f2</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:48112880-948c-4244-8205-5acdc2f8f41e">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/GH01036132.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:e04922bd-5209-4a64-8ac3-fa1bbab32802" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:a4ec5035-a020-489f-a4ca-eceb14e10a5a" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:31:41Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:26Z</oa:serializedAt>
+				</oa:Annotation>
+				<oa:Annotation rdf:about="urn:uuid:7e8d1651-32e4-4e36-b8f2-cc0d1674aac2">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:e2c2f0a3-d2ba-4869-80e8-48803cc52e62">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:ae7a6af6-321e-40b1-9a01-e80956776283">
+									<dwc:collectionCode>NEBC</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:90a7f693-6090-40b7-8699-88ade2e4cae1">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>01036133</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15868"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>NEBC</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:1c620ac6-9228-4a52-ac8a-804e0e1aa85d">
+									<dwcFP:isFiledUnderNameInCollection>NEBC</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>17311</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:ce412a61-28b4-4e7d-9e58-b84dac451081">
+									<dwc:eventDate>1918-07-28</dwc:eventDate>
+									<dwc:verbatimEventDate>July 28, 1918</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>Harwich</dwc:locality>
+							<dc:created>2015-12-22T19:31:58Z</dc:created>
+							<dwc:modified>2015-12-22T19:31:58Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:be547243-6e2c-4ec9-acb6-2c13080a20a9">
+                                    <dc:rights>Copyright © 2015 New England Botanical Club</dc:rights>
+                                    <xmpRights:Owner>New England Botanical Club</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:0856e071-a677-4a6a-92f4-9a4634cad624">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036133.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>1afe329dd03d57ec7848a71e596af7c8</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:1abfbc09-be8f-4cba-a82b-20eccaee9835">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036133.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:be547243-6e2c-4ec9-acb6-2c13080a20a9" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:36e7562c-42f2-48cf-acab-c4053830c298" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:31:58Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:28Z</oa:serializedAt>
+				</oa:Annotation>
+				<oa:Annotation rdf:about="urn:uuid:6a811618-16c1-465f-a438-464b4ecb5e83">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:da5c4ad9-d001-442d-889b-ea3122a4c6e4">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:f0e9b28c-7ef6-446c-98ee-16fd98014eb6">
+									<dwc:collectionCode>NEBC</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:54fb1a53-e8c0-4807-8eed-7ab06c47107b">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>01036134</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15868"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>NEBC</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:90bc523a-fae2-4c7c-8af3-48cf00c6ea71">
+									<dwcFP:isFiledUnderNameInCollection>NEBC</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>17312</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:18eb342a-ce3f-4233-9205-40595e0b847a">
+									<dwc:eventDate>1918-07-28</dwc:eventDate>
+									<dwc:verbatimEventDate>July 28, 1918</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>Harwich</dwc:locality>
+							<dc:created>2015-12-22T19:33:08Z</dc:created>
+							<dwc:modified>2015-12-22T19:33:08Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:e6445648-b411-4c7b-9e45-06e80c4fca05">
+                                    <dc:rights>Copyright © 2015 New England Botanical Club</dc:rights>
+                                    <xmpRights:Owner>New England Botanical Club</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:48af9ef1-9ebc-46f4-987c-a6e738d44a1a">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036134.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>4ea590a639dbac4d0790f3d3f1380f29</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:66157e73-d481-4a7b-b44e-46eae89c78a1">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036134.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:e6445648-b411-4c7b-9e45-06e80c4fca05" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:9e26c2f3-fcdb-4c2f-a6f7-780470d20c70" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:33:08Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:29Z</oa:serializedAt>
+				</oa:Annotation>
+				<oa:Annotation rdf:about="urn:uuid:2c17d092-0879-468b-9e31-be670ce1d45d">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:a05db6cf-a8ba-4add-8c47-26ff2e8c94b4">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:a6792c55-58b1-4cc1-aa06-c05a0c526c4e">
+									<dwc:collectionCode>NEBC</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:d46e58fe-9af7-446c-a826-14f496480e93">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>00816315</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15868"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>NEBC</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:b26c62a2-12f3-4a32-9cc6-2c836a4df05c">
+									<dwcFP:isFiledUnderNameInCollection>NEBC</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>1</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:ace77c61-8eb5-4435-8a4e-a05bca36523e">
+									<dwc:eventDate>1879-07-14</dwc:eventDate>
+									<dwc:verbatimEventDate>July 14, 1879</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>South Yarmouth</dwc:locality>
+							<dc:created>2015-12-22T19:33:33Z</dc:created>
+							<dwc:modified>2015-12-22T19:33:33Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:90556692-22dc-4c1b-9827-8a1c5c714630">
+                                    <dc:rights>Copyright © 2015 New England Botanical Club</dc:rights>
+                                    <xmpRights:Owner>New England Botanical Club</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:1452dc11-067e-4840-98ff-8ae99ca438e6">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC00816315.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>e2b991d203828ad0f9db01e9c334ff97</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:2875c6cc-96d9-42b8-981a-924e767176a5">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC00816315.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:90556692-22dc-4c1b-9827-8a1c5c714630" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:0c6a849b-8664-44b3-80a6-e61e92c3a013" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:33:33Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:30Z</oa:serializedAt>
+				</oa:Annotation>
+				<oa:Annotation rdf:about="urn:uuid:9aca009d-a474-441a-ba07-56948cab4a92">
+					<oa:hasTarget>
+						<oa:SpecificResource rdf:about="urn:uuid:484b847f-f069-489c-98d4-36a514cdb0be">
+							<oa:hasSelector>
+								<oad:KVPairQuerySelector rdf:about="urn:uuid:1495c21b-50a2-4c00-9035-3c53d8b4b004">
+									<dwc:collectionCode>NEBC</dwc:collectionCode>
+									<dwc:institutionCode>Harvard University</dwc:institutionCode>
+								</oad:KVPairQuerySelector>
+							</oa:hasSelector>
+							<oa:hasSource rdf:resource="http://filteredpush.org/ontologies/oa/oad.rdf#AnySuchDataset" />
+						</oa:SpecificResource>
+					 </oa:hasTarget>
+					 <oa:hasBody>
+						<dwcFP:Occurence rdf:about="urn:uuid:900d304c-fee9-4436-8c64-c26204b48e2d">
+							<dc:type>PhysicalObject</dc:type>
+							<dwcFP:basisOfRecord rdf:resource="http://rs.tdwg.org/dwc/dwctype/PreservedSpecimen"/>
+							<dwc:catalogNumber>01036129</dwc:catalogNumber>
+							<dwcFP:hasCollectionByID rdf:resource="urn:lsid:biocol.org:col:15868"/>
+							<dwc:institutionCode>Harvard University</dwc:institutionCode>
+							<dwc:collectionCode>NEBC</dwc:collectionCode>
+							<dwcFP:hasIdentification>
+								<dwcFP:Identification rdf:about="urn:uuid:3cb95416-58e3-4af2-9a5f-b0b5685e5e4c">
+									<dwcFP:isFiledUnderNameInCollection>NEBC</dwcFP:isFiledUnderNameInCollection>
+									<dwc:family>Menyanthaceae</dwc:family>
+									<dwc:scientificName>Nymphoides cordata (Elliott) Fernald</dwc:scientificName>
+									<dwc:genus>Nymphoides</dwc:genus>
+									<dwc:specificEpithet>cordata</dwc:specificEpithet>
+									<dwcFP:infraspecificRank></dwcFP:infraspecificRank>
+									<dwc:infraspecificEpithet></dwc:infraspecificEpithet>
+									<dwc:scientificNameAuthorship>(Elliott) Fernald</dwc:scientificNameAuthorship>
+									<dwc:identificationQualifier></dwc:identificationQualifier>
+									<dwcFP:usesTaxon>
+										<dwcFP:Taxon rdf:about="urn:uuid:">
+											<dwcFP:hasTaxonID></dwcFP:hasTaxonID>
+										</dwcFP:Taxon>						
+									</dwcFP:usesTaxon>
+								</dwcFP:Identification>
+							</dwcFP:hasIdentification>
+							<dwc:recordedBy></dwc:recordedBy>
+							<dwcFP:hasCollector rdf:resource=""/>
+							<dwc:recordNumber>1</dwc:recordNumber>
+							<dwcFP:hasCollectingEvent>
+								<dwcFP:Event rdf:about="urn:uuid:7834b457-e2c7-44bf-b4b7-7208809bf462">
+									<dwc:eventDate>1879-08-26</dwc:eventDate>
+									<dwc:verbatimEventDate>Aug. 26, 1879</dwc:verbatimEventDate>
+									<dwc:eventRemarks></dwc:eventRemarks>
+								</dwcFP:Event>
+							</dwcFP:hasCollectingEvent>
+							<dwc:country>United States</dwc:country>
+							<dwc:stateProvince>Massachusetts</dwc:stateProvince>
+							<dwc:county></dwc:county>
+							<dwc:municipality></dwc:municipality>
+							<dwc:locality>South Yarmouth</dwc:locality>
+							<dc:created>2015-12-22T19:33:49Z</dc:created>
+							<dwc:modified>2015-12-22T19:33:49Z</dwc:modified>
+							<obo:OBI_0000967></obo:OBI_0000967>
+							<dwcFP:hasAssociatedMedia>
+                                <dcmitype:Image rdf:about="urn:uuid:5ef3c237-62ab-4657-b437-c6dcc0d0fe7a">
+                                    <dc:rights>Copyright © 2015 New England Botanical Club</dc:rights>
+                                    <xmpRights:Owner>New England Botanical Club</xmpRights:Owner>
+                                    <xmpRights:UsageTerms>Available under Creative Commons BY-SA-NC 3.0 license</xmpRights:UsageTerms>
+		    					    <ac:hasAccessPoint>
+	    							    <rdf:Description rdf:about="urn:uuid:924ce092-4cc9-4a37-baf4-fece6c57f026">
+    									    <ac:variant>Offline</ac:variant>
+    									    <ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036129.dng</ac:accessURI>
+	    							    	<dc:format>dng</dc:format>
+		    					    		<ac:hashFunction>MD5</ac:hashFunction>						
+			    			    			<ac:hashValue>bcae634d7890509c72f7ea87d580fa0a</ac:hashValue>
+				    	    			</rdf:Description>
+				        			</ac:hasAccessPoint>
+			    		    		<ac:hasAccessPoint>
+		    				    		<rdf:Description rdf:about="urn:uuid:c03876dc-6a12-4255-b2a2-d031fad3bae6">
+	    						    		<ac:variant>Offline</ac:variant>
+    								    	<ac:accessURI>file://data.iplantcollaborative.org/iplant/home/shared/NEVP/HUH/2016-01-07-163859/NEBC01036129.jpg</ac:accessURI>
+									        <dc:format>jpg</dc:format>
+    							  	    </rdf:Description>
+	    					        </ac:hasAccessPoint>	
+                                </dcmitype:Image>
+						    </dwcFP:hasAssociatedMedia>
+						</dwcFP:Occurence>
+					</oa:hasBody>
+					<oad:hasEvidence rdf:resource="urn:uuid:5ef3c237-62ab-4657-b437-c6dcc0d0fe7a" />				
+					<oad:hasExpectation>
+						<oad:Expectation_Insert rdf:about="urn:uuid:1a7312e8-3e68-46eb-8ef8-ee2a9899808e" />
+					</oad:hasExpectation>
+					<oa:motivatedBy>
+						<oad:transcribing />
+					</oa:motivatedBy>  
+					<vivo:hasFundingVehicle rdf:resource="http://www.nsf.gov/awardsearch/showAward?AWD_ID=1209149" />
+					<oa:annotatedBy>
+						<foaf:Person rdf:about="urn:uuid:6fd60793-4c84-4fb6-aaea-ca0819bde62f">
+							<foaf:mbox_sha1sum>b2eee947825cdacbdd5263853b70d970</foaf:mbox_sha1sum>
+							<foaf:name>claire</foaf:name>
+							<foaf:workplaceHomepage></foaf:workplaceHomepage>
+						</foaf:Person>
+					</oa:annotatedBy>
+					<oa:annotatedAt>2015-12-22T19:33:49Z</oa:annotatedAt>
+					<oa:serializedBy>
+						<foaf:Agent rdf:about="https://sourceforge.net/p/nevp/svn/32/tree/trunk/rdfXmlGen.pl">
+							<foaf:name>rdfXMLGen.pl version 32</foaf:name>
+						</foaf:Agent>
+					</oa:serializedBy>
+					<oa:serializedAt>2016-01-07T22:28:32Z</oa:serializedAt>
+				</oa:Annotation>
+</rdf:RDF>
